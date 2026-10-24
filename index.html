@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PilahCerdas — Platform Edukasi Pemilahan Sampah dan Daur Ulang. AI Scanner, Konsultan Eco, Generator Upcycling, dan Panduan Lengkap untuk masyarakat Indonesia." />
+  <title>PilahCerdas — Smart Waste &amp; Upcycling Assistant</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary:   { DEFAULT: '#16a34a', dark: '#15803d', light: '#dcfce7' },
+            secondary: { DEFAULT: '#64748b' },
+          },
+          fontFamily: {
+            sans: ['"Inter"', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+
+  <!-- ===== NAVBAR ===== -->
+  <nav id="navbar" class="fixed top-0 inset-x-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm border-b border-gray-200" role="navigation" aria-label="Navigasi utama">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+
+        <!-- Logo -->
+        <a href="#beranda" class="flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md" aria-label="PilahCerdas — Halaman Beranda">
+          <span class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white text-lg" aria-hidden="true">♻</span>
+          <span class="text-lg font-bold text-gray-900">Pilah<span class="text-primary">Cerdas</span></span>
+        </a>
+
+        <!-- Desktop Menu -->
+        <ul class="hidden md:flex items-center gap-1 text-sm font-medium" role="list">
+          <li>
+            <a href="#beranda" class="nav-link px-3 py-2 rounded-md">Home</a>
+          </li>
+          <li>
+            <a href="#panduan" class="nav-link px-3 py-2 rounded-md">Panduan Sampah</a>
+          </li>
+          <!-- AI Tools Dropdown -->
+          <li class="relative nav-dropdown-wrap">
+            <button class="nav-link nav-dropdown-btn px-3 py-2 rounded-md flex items-center gap-1" aria-expanded="false" aria-haspopup="true" aria-controls="dropdown-ai-tools" id="btn-ai-tools">
+              AI Tools
+              <svg class="w-3.5 h-3.5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <ul id="dropdown-ai-tools" class="nav-dropdown hidden" role="menu" aria-labelledby="btn-ai-tools">
+              <li><a href="#scanner"   class="nav-dropdown-item" role="menuitem">🔍 AI Waste Scanner</a></li>
+              <li><a href="#konsultan" class="nav-dropdown-item" role="menuitem">💬 Konsultan Eco</a></li>
+              <li><a href="#upcycling" class="nav-dropdown-item" role="menuitem">🎨 Generator Upcycling</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="#eco-challenge" class="nav-link px-3 py-2 rounded-md">Eco Challenge</a>
+          </li>
+        </ul>
+
+        <!-- Desktop CTA -->
+        <div class="hidden md:flex items-center gap-2">
+          <a href="#catatan" class="btn-secondary text-xs px-3 py-1.5">📋 Catatan Saya</a>
+        </div>
+
+        <!-- Mobile Toggle -->
+        <button id="menu-toggle" class="md:hidden p-2 rounded-md text-gray-600 hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-expanded="false" aria-controls="mobile-menu" aria-label="Buka menu navigasi">
+          <svg id="icon-open"  class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg id="icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-200" role="menu">
+      <ul class="flex flex-col px-4 py-3 gap-0.5 text-sm font-medium">
+        <li><a href="#beranda"      class="nav-link block px-3 py-2 rounded-md" role="menuitem">🏠 Home</a></li>
+        <li><a href="#panduan"     class="nav-link block px-3 py-2 rounded-md" role="menuitem">📖 Panduan Sampah</a></li>
+        <li class="pt-1 pb-0.5 px-3 text-xs text-gray-400 uppercase tracking-wide font-semibold">AI Tools</li>
+        <li><a href="#scanner"     class="nav-link block px-3 py-2 rounded-md pl-5" role="menuitem">🔍 AI Waste Scanner</a></li>
+        <li><a href="#konsultan"   class="nav-link block px-3 py-2 rounded-md pl-5" role="menuitem">💬 Konsultan Eco</a></li>
+        <li><a href="#upcycling"   class="nav-link block px-3 py-2 rounded-md pl-5" role="menuitem">🎨 Generator Upcycling</a></li>
+        <li><a href="#eco-challenge" class="nav-link block px-3 py-2 rounded-md" role="menuitem">✅ Eco Challenge</a></li>
+        <li><a href="#catatan"     class="nav-link block px-3 py-2 rounded-md" role="menuitem">📋 Catatan Pemilahan</a></li>
+        <li><a href="#tentang"     class="nav-link block px-3 py-2 rounded-md" role="menuitem">ℹ️ Tentang</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ===== 1. HERO ===== -->
+    <section id="beranda" class="hero-section pt-20 pb-16" aria-labelledby="hero-heading">
+      <div class="hero-bg-pattern" aria-hidden="true"></div>
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div class="flex flex-col md:flex-row items-center gap-10 lg:gap-16">
+
+          <!-- Text -->
+          <div class="flex-1 text-center md:text-left">
+            <div class="inline-flex items-center gap-1.5 bg-green-100 text-green-700 text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
+              <span aria-hidden="true">🌿</span> Smart Waste &amp; Upcycling Assistant
+            </div>
+            <h1 id="hero-heading" class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-[1.1] mb-5">
+              Pilah Lebih<br/>
+              <span class="text-primary">Cerdas.</span>
+              <br/><span class="text-gray-500 text-3xl sm:text-4xl lg:text-5xl font-bold">Bumi Lebih Sehat.</span>
+            </h1>
+            <p class="text-gray-600 text-base sm:text-lg max-w-lg mb-8 leading-relaxed">
+              Kenali jenis sampah, dapatkan panduan pemilahan, konsultasi dengan AI, dan temukan ide upcycling kreatif — semua dalam satu platform edukasi.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
+              <a href="#panduan" class="btn-primary text-sm sm:text-base px-6 py-3 inline-flex items-center gap-2">
+                <span aria-hidden="true">📖</span> Mulai Pilah Sampah
+              </a>
+              <a href="#scanner" class="btn-hero-secondary text-sm sm:text-base px-6 py-3 inline-flex items-center gap-2">
+                <span aria-hidden="true">🔍</span> Coba AI Scanner
+              </a>
+            </div>
+            <!-- Feature pills -->
+            <div class="flex flex-wrap gap-2 mt-6 justify-center md:justify-start">
+              <span class="feature-pill">🗑️ 17 Panduan Sampah</span>
+              <span class="feature-pill">📸 AI Scanner</span>
+              <span class="feature-pill">💬 Konsultan Eco</span>
+              <span class="feature-pill">🎨 Ide Upcycling</span>
+            </div>
+          </div>
+
+          <!-- Visual -->
+          <div class="flex-1 flex justify-center md:justify-end" aria-hidden="true">
+            <div class="hero-visual-wrap">
+              <div class="hero-circle-outer">
+                <div class="hero-circle-inner">
+                  <span class="hero-emoji">♻️</span>
+                </div>
+              </div>
+              <!-- Floating badges -->
+              <div class="hero-badge hero-badge-tl">🌿 Organik</div>
+              <div class="hero-badge hero-badge-tr">♻️ Anorganik</div>
+              <div class="hero-badge hero-badge-bl">⚠️ Khusus/B3</div>
+              <div class="hero-badge hero-badge-br">🎨 Upcycling</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 2. DASHBOARD — RINGKASAN AKTIVITAS ===== -->
+    <section id="dashboard" class="py-10 bg-white border-y border-gray-100" aria-labelledby="heading-dashboard">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
+          <h2 id="heading-dashboard" class="section-title">📊 Aktivitas Pemilahan Saya</h2>
+          <p class="text-xs text-gray-400 flex items-center gap-1">
+            <span aria-hidden="true">🔒</span> Data lokal di browser ini · tidak tersinkronisasi ke perangkat lain
+          </p>
+        </div>
+        <p class="text-xs text-amber-600 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mb-5 inline-flex items-start gap-1.5" role="note">
+          <span aria-hidden="true">ℹ️</span>
+          <span>Angka di bawah mencerminkan catatan yang Anda simpan sendiri di browser ini — bukan data populasi atau dampak lingkungan yang telah terverifikasi.</span>
+        </p>
+        <div id="dashboard-cards" class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- Diisi oleh JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 3. PANDUAN PEMILAHAN SAMPAH ===== -->
+    <section id="panduan" class="py-16 bg-gray-50" aria-labelledby="heading-panduan">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="section-header">
+          <h2 id="heading-panduan" class="section-title">📖 Panduan Pemilahan Sampah</h2>
+          <p class="section-subtitle">Cari nama barang untuk menemukan panduan penanganan yang tepat. Penerimaan dan metode pengolahan dapat berbeda tergantung fasilitas di daerah Anda.</p>
+        </div>
+
+        <!-- Kategori Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-10" id="kategori">
+          <article class="category-card category-organik" aria-labelledby="cat-organik-title">
+            <div class="category-card-icon" aria-hidden="true">🌿</div>
+            <h3 id="cat-organik-title" class="category-card-title">Organik</h3>
+            <p class="category-card-desc">Sampah dari bahan alami yang dapat terurai secara biologis menjadi kompos.</p>
+            <p class="category-card-example"><strong>Contoh:</strong> Sisa sayuran, kulit buah, daun kering, ampas kopi, sisa nasi.</p>
+            <a href="#panduan-hasil" data-filter="organik" class="category-card-link">Lihat Panduan →</a>
+          </article>
+
+          <article class="category-card category-anorganik" aria-labelledby="cat-anorganik-title">
+            <div class="category-card-icon" aria-hidden="true">♻️</div>
+            <h3 id="cat-anorganik-title" class="category-card-title">Anorganik (Daur Ulang)</h3>
+            <p class="category-card-desc">Sampah yang berpotensi didaur ulang jika bersih dan diterima oleh fasilitas setempat.</p>
+            <p class="category-card-example"><strong>Contoh:</strong> Botol plastik bersih, kertas bersih, kardus, kaleng.</p>
+            <a href="#panduan-hasil" data-filter="anorganik" class="category-card-link">Lihat Panduan →</a>
+          </article>
+
+          <article class="category-card category-khusus" aria-labelledby="cat-khusus-title">
+            <div class="category-card-icon" aria-hidden="true">⚠️</div>
+            <h3 id="cat-khusus-title" class="category-card-title">Penanganan Khusus</h3>
+            <p class="category-card-desc">Sampah berbahaya dan beracun (B3). Jangan dibuang sembarangan atau dibakar.</p>
+            <p class="category-card-example"><strong>Contoh:</strong> Baterai bekas, elektronik rusak, lampu TL/LED bekas.</p>
+            <a href="#panduan-hasil" data-filter="khusus" class="category-card-link category-card-link-khusus">Lihat Panduan →</a>
+          </article>
+        </div>
+
+        <!-- Search Bar -->
+        <div id="panduan-hasil" class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+          <h3 class="text-base font-semibold text-gray-700 mb-4">🔍 Cari Panduan Spesifik</h3>
+          <div class="flex flex-col sm:flex-row gap-3 mb-6">
+            <div class="relative flex-1">
+              <label for="search-input" class="sr-only">Cari nama barang</label>
+              <span class="absolute inset-y-0 left-3 flex items-center text-gray-400 pointer-events-none text-sm" aria-hidden="true">🔍</span>
+              <input id="search-input" type="search" placeholder="Cari nama barang, misal: botol plastik, baterai..." autocomplete="off"
+                class="w-full pl-9 pr-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                aria-label="Cari nama barang sampah" />
+            </div>
+            <div>
+              <label for="filter-kategori" class="sr-only">Filter kategori</label>
+              <select id="filter-kategori" class="w-full sm:w-auto px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary" aria-label="Filter berdasarkan kategori">
+                <option value="">Semua Kategori</option>
+                <option value="organik">🌿 Organik</option>
+                <option value="anorganik">♻️ Anorganik</option>
+                <option value="khusus">⚠️ Penanganan Khusus</option>
+              </select>
+            </div>
+            <button id="btn-reset-search" class="btn-secondary text-sm whitespace-nowrap rounded-xl" type="button" aria-label="Reset pencarian dan filter">Reset</button>
+          </div>
+
+          <div id="search-results" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" role="region" aria-live="polite" aria-atomic="true" aria-label="Hasil pencarian panduan">
+            <!-- Diisi oleh JS -->
+          </div>
+          <div id="search-empty" class="hidden text-center py-12 text-gray-400" role="alert">
+            <p class="text-4xl mb-3">🔎</p>
+            <p class="font-medium text-gray-600">Barang tidak ditemukan.</p>
+            <p class="text-sm mt-1">Coba kata kunci lain atau pilih kategori yang berbeda.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 4. AI WASTE SCANNER ===== -->
+    <section id="scanner" class="py-16 bg-white" aria-labelledby="heading-scanner">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="section-header">
+          <h2 id="heading-scanner" class="section-title">🔍 AI Waste Scanner</h2>
+          <p class="section-subtitle">Upload foto sampah untuk mendapatkan panduan pemilahan yang sesuai.</p>
+        </div>
+
+        <div class="demo-notice mb-6" role="note">
+          <span aria-hidden="true">🧪</span>
+          <span><strong>Mode Demo</strong> — belum menggunakan analisis AI langsung. Hasil dihasilkan dari aturan lokal berdasarkan nama file. Foto Anda <strong>tidak dikirim ke server manapun</strong>.</span>
+        </div>
+
+        <!-- Upload Area -->
+        <div id="scanner-upload-area" class="scanner-dropzone" role="button" tabindex="0" aria-label="Area unggah foto sampah. Klik atau seret foto ke sini." aria-describedby="scanner-hint">
+          <div id="scanner-placeholder">
+            <div class="text-5xl mb-3" aria-hidden="true">📷</div>
+            <p class="text-gray-600 font-medium">Seret foto ke sini atau klik untuk memilih</p>
+            <p id="scanner-hint" class="text-xs text-gray-400 mt-1">Format didukung: JPEG, PNG, WebP · Maks 5 MB</p>
+          </div>
+          <img id="scanner-preview" class="hidden scanner-preview-img" alt="Preview foto sampah yang diunggah" />
+          <input id="scanner-file-input" type="file" accept="image/jpeg,image/png,image/webp" class="hidden" aria-hidden="true" />
+        </div>
+        <p id="scanner-file-error" class="error-msg hidden mt-2" role="alert"></p>
+
+        <div class="flex gap-3 mt-4 flex-wrap">
+          <button id="btn-scanner-analisis" class="btn-primary" type="button" disabled aria-disabled="true">Analisis Sampah</button>
+          <button id="btn-scanner-hapus" class="btn-secondary hidden" type="button">Hapus Foto</button>
+        </div>
+
+        <div id="scanner-status" class="hidden mt-5 text-center text-sm text-gray-500 scanner-loading" aria-live="polite" aria-atomic="true">
+          <span class="loading-dots" aria-label="Sedang menganalisis...">Menganalisis</span>
+        </div>
+        <div id="scanner-result" class="hidden mt-5" aria-live="polite" aria-atomic="true">
+          <!-- Diisi oleh JS -->
+        </div>
+        <div id="scanner-retry" class="hidden mt-4 text-center">
+          <button id="btn-scanner-retry" class="btn-secondary text-sm" type="button">🔄 Coba Lagi dengan Foto Lain</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 5. KONSULTAN ECO CERDAS ===== -->
+    <section id="konsultan" class="py-16 bg-gray-50" aria-labelledby="heading-konsultan">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="section-header">
+          <h2 id="heading-konsultan" class="section-title">💬 Konsultan Eco Cerdas</h2>
+          <p class="section-subtitle">Tanyakan seputar pemilahan sampah, daur ulang, dan kebiasaan ramah lingkungan.</p>
+        </div>
+
+        <div class="demo-notice mb-6" role="note">
+          <span aria-hidden="true">🧪</span>
+          <span><strong>Mode Demo</strong> — jawaban berasal dari database lokal, bukan model AI generatif langsung. Jawaban bersifat edukatif dan mungkin tidak mencakup semua situasi.</span>
+        </div>
+
+        <div class="flex flex-wrap gap-2 mb-4" id="chat-suggestions" aria-label="Saran pertanyaan">
+          <!-- Diisi oleh JS -->
+        </div>
+
+        <div id="chat-window" class="chat-window" role="log" aria-live="polite" aria-label="Riwayat percakapan konsultan eco">
+          <!-- Diisi oleh JS -->
+        </div>
+
+        <form id="chat-form" class="mt-3 flex gap-2" novalidate>
+          <label for="chat-input" class="sr-only">Tulis pertanyaan Anda</label>
+          <input id="chat-input" type="text" maxlength="300" autocomplete="off"
+            class="flex-1 form-input rounded-xl"
+            placeholder="Contoh: Bagaimana cara membuat kompos dari sisa dapur?" />
+          <button id="btn-chat-kirim" type="submit" class="btn-primary whitespace-nowrap rounded-xl" aria-label="Kirim pertanyaan">Kirim</button>
+        </form>
+        <p id="chat-input-error" class="error-msg hidden mt-1" role="alert"></p>
+        <div class="mt-2 flex justify-end">
+          <button id="btn-chat-reset" type="button" class="text-xs text-gray-400 hover:text-gray-600 underline">Hapus riwayat percakapan</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 6. GENERATOR IDE UPCYCLING ===== -->
+    <section id="upcycling" class="py-16 bg-white" aria-labelledby="heading-upcycling">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="section-header">
+          <h2 id="heading-upcycling" class="section-title">🎨 Generator Ide Upcycling</h2>
+          <p class="section-subtitle">Masukkan barang bekas yang kamu miliki dan temukan ide kreatif untuk mendaur ulangnya.</p>
+        </div>
+
+        <div class="demo-notice mb-6" role="note">
+          <span aria-hidden="true">🧪</span>
+          <span><strong>Rekomendasi dari aturan lokal</strong> — generator ini mencocokkan input Anda dengan database ide yang tersedia, bukan model AI generatif. Hasil disesuaikan berdasarkan input yang diberikan.</span>
+        </div>
+
+        <div class="card max-w-2xl mx-auto mb-8">
+          <h3 class="text-base font-semibold text-gray-700 mb-4">🗂️ Informasi Barang Bekas</h3>
+          <form id="upcycling-form" novalidate>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+              <div>
+                <label for="uc-barang" class="form-label">Jenis Barang Bekas <span class="text-red-500" aria-hidden="true">*</span></label>
+                <input id="uc-barang" type="text" maxlength="80" autocomplete="off" class="form-input" placeholder="Misal: botol plastik, kardus, kaleng" aria-required="true" aria-describedby="uc-error-barang" />
+                <p id="uc-error-barang" class="error-msg hidden" role="alert"></p>
+              </div>
+              <div>
+                <label for="uc-jumlah" class="form-label">Perkiraan Jumlah</label>
+                <select id="uc-jumlah" class="form-input">
+                  <option value="sedikit">1–3 buah</option>
+                  <option value="sedang" selected>4–10 buah</option>
+                  <option value="banyak">Lebih dari 10 buah</option>
+                </select>
+              </div>
+              <div>
+                <label for="uc-tujuan" class="form-label">Tujuan Penggunaan</label>
+                <select id="uc-tujuan" class="form-input">
+                  <option value="dekorasi">Dekorasi</option>
+                  <option value="penyimpanan">Penyimpanan</option>
+                  <option value="rumah">Perlengkapan Rumah</option>
+                  <option value="kerajinan">Kerajinan / Hadiah</option>
+                </select>
+              </div>
+              <div>
+                <label for="uc-kesulitan" class="form-label">Tingkat Kesulitan</label>
+                <select id="uc-kesulitan" class="form-input">
+                  <option value="mudah">Mudah (pemula)</option>
+                  <option value="sedang" selected>Sedang</option>
+                  <option value="sulit">Sulit (terampil)</option>
+                </select>
+              </div>
+              <div class="sm:col-span-2">
+                <label for="uc-bahan" class="form-label">Bahan Tambahan Tersedia (opsional)</label>
+                <input id="uc-bahan" type="text" maxlength="150" autocomplete="off" class="form-input" placeholder="Misal: cat, gunting, lem, tali" />
+              </div>
+            </div>
+            <button type="submit" id="btn-uc-generate" class="btn-primary">✨ Cari Ide Upcycling</button>
+          </form>
+        </div>
+
+        <div id="uc-results" class="hidden">
+          <h3 class="text-base font-semibold text-gray-700 mb-4 text-center">💡 Ide Upcycling untuk Kamu</h3>
+          <div id="uc-idea-cards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+            <!-- Diisi oleh JS -->
+          </div>
+        </div>
+        <div id="uc-detail" class="hidden card mt-4">
+          <!-- Diisi oleh JS -->
+        </div>
+        <div id="uc-empty" class="hidden text-center py-10 text-gray-400">
+          <p class="text-3xl mb-2">🤔</p>
+          <p>Tidak ada ide yang cocok ditemukan. Coba ubah jenis barang atau tujuan penggunaan.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 7. ECO-HABIT TRACKER / ECO CHALLENGE ===== -->
+    <section id="eco-challenge" class="py-16 bg-gray-50" aria-labelledby="heading-eco-challenge">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="section-header">
+          <h2 id="heading-eco-challenge" class="section-title">✅ Eco Challenge &amp; Habit Tracker</h2>
+          <p class="section-subtitle">Tantang dirimu dengan kebiasaan ramah lingkungan. Tandai yang sudah kamu lakukan hari ini.</p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-6">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-sm font-semibold text-gray-700">Progres Tantangan Hari Ini</span>
+            <span id="checklist-label" class="text-sm font-bold text-primary">0 / 5 selesai</span>
+          </div>
+          <div class="w-full bg-gray-100 rounded-full h-4" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="5" aria-labelledby="checklist-label" id="progress-bar-wrap">
+            <div id="progress-bar" class="bg-primary h-4 rounded-full transition-all duration-500 flex items-center justify-end pr-2" style="width:0%">
+              <span class="text-white text-xs font-bold hidden" id="progress-pct">0%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Checklist Items -->
+        <ul id="checklist-list" class="space-y-3" role="list" aria-label="Daftar kebiasaan ramah lingkungan">
+          <!-- Diisi oleh JS -->
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== CATATAN PEMILAHAN (CRUD) — tersembunyi dalam alur tapi tetap dapat diakses ===== -->
+    <section id="catatan" class="py-16 bg-white" aria-labelledby="heading-catatan">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="section-header">
+          <h2 id="heading-catatan" class="section-title">📋 Catatan Pemilahan Saya</h2>
+          <p class="section-subtitle">Catat sampah yang sudah kamu pilah untuk memantau kebiasaanmu dari waktu ke waktu.</p>
+        </div>
+
+        <!-- Form -->
+        <div class="card max-w-2xl mx-auto mb-8">
+          <h3 id="form-title" class="text-base font-semibold text-gray-700 mb-4">➕ Tambah Catatan Baru</h3>
+          <form id="form-catatan" novalidate>
+            <input type="hidden" id="edit-id" value="" />
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+              <div>
+                <label for="input-nama" class="form-label">Nama Sampah <span class="text-red-500" aria-hidden="true">*</span></label>
+                <input id="input-nama" type="text" maxlength="100" autocomplete="off" class="form-input" placeholder="Misal: Botol plastik" aria-required="true" aria-describedby="error-nama" />
+                <p id="error-nama" class="error-msg hidden" role="alert"></p>
+              </div>
+              <div>
+                <label for="input-kategori" class="form-label">Kategori <span class="text-red-500" aria-hidden="true">*</span></label>
+                <select id="input-kategori" class="form-input" aria-required="true" aria-describedby="error-kategori">
+                  <option value="">-- Pilih Kategori --</option>
+                  <option value="organik">Organik</option>
+                  <option value="anorganik">Anorganik (Daur Ulang)</option>
+                  <option value="khusus">Penanganan Khusus</option>
+                </select>
+                <p id="error-kategori" class="error-msg hidden" role="alert"></p>
+              </div>
+              <div>
+                <label for="input-berat" class="form-label">Berat (kg) <span class="text-red-500" aria-hidden="true">*</span></label>
+                <input id="input-berat" type="number" min="0.01" max="1000" step="0.01" class="form-input" placeholder="Misal: 0.5" aria-required="true" aria-describedby="error-berat" />
+                <p id="error-berat" class="error-msg hidden" role="alert"></p>
+              </div>
+              <div>
+                <label for="input-tanggal" class="form-label">Tanggal <span class="text-red-500" aria-hidden="true">*</span></label>
+                <input id="input-tanggal" type="date" class="form-input" aria-required="true" aria-describedby="error-tanggal" />
+                <p id="error-tanggal" class="error-msg hidden" role="alert"></p>
+              </div>
+            </div>
+            <div class="flex gap-3 flex-wrap">
+              <button type="submit" id="btn-submit" class="btn-primary text-sm">Simpan Catatan</button>
+              <button type="button" id="btn-cancel-edit" class="btn-secondary text-sm hidden">Batalkan Edit</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Tabel -->
+        <div class="overflow-x-auto rounded-xl shadow-sm border border-gray-200 bg-white">
+          <table class="min-w-full text-sm" aria-label="Daftar catatan pemilahan sampah">
+            <thead class="bg-green-50 text-green-800">
+              <tr>
+                <th class="px-4 py-3 text-left font-semibold">Nama Sampah</th>
+                <th class="px-4 py-3 text-left font-semibold">Kategori</th>
+                <th class="px-4 py-3 text-right font-semibold">Berat (kg)</th>
+                <th class="px-4 py-3 text-left font-semibold">Tanggal</th>
+                <th class="px-4 py-3 text-center font-semibold">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="tabel-catatan" class="divide-y divide-gray-100">
+              <!-- Diisi oleh JS -->
+            </tbody>
+          </table>
+          <div id="catatan-empty" class="hidden text-center py-10 text-gray-400">
+            <p class="text-3xl mb-2">📋</p>
+            <p>Belum ada catatan. Tambahkan catatan pertamamu di atas!</p>
+          </div>
+        </div>
+
+        <div class="mt-6 text-center">
+          <button id="btn-hapus-semua" type="button" class="text-xs text-red-400 hover:text-red-600 underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 rounded">Hapus semua data aktivitas saya</button>
+          <p class="text-xs text-gray-400 mt-1">Data disimpan hanya di browser ini. Menghapus data bersifat permanen.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TIPS EDUKASI ===== -->
+    <section id="tips" class="py-16 bg-gray-50" aria-labelledby="heading-tips">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="section-header">
+          <h2 id="heading-tips" class="section-title">💡 Tips &amp; Informasi Edukasi</h2>
+          <p class="section-subtitle">Pengetahuan dasar untuk memulai kebiasaan memilah sampah.</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="tips-grid">
+          <!-- Diisi oleh JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 8. TENTANG ===== -->
+    <section id="tentang" class="py-16 bg-white" aria-labelledby="heading-tentang">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="section-header">
+          <h2 id="heading-tentang" class="section-title">ℹ️ Tentang PilahCerdas</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+          <div>
+            <p class="text-gray-600 mb-4 leading-relaxed">PilahCerdas adalah platform edukasi pemilahan sampah yang ditujukan untuk pelajar, mahasiswa, keluarga, dan masyarakat umum. Kami hadir untuk mempermudah akses informasi pengelolaan sampah yang benar dan bertanggung jawab.</p>
+            <p class="text-gray-600 mb-4 leading-relaxed">Website ini bersifat statis, berjalan sepenuhnya di browser, dan tidak terhubung ke server manapun. Seluruh data aktivitas Anda disimpan secara lokal di browser dan tidak dikirimkan ke pihak mana pun.</p>
+            <div class="inline-flex items-center gap-2 bg-green-50 border border-green-200 text-green-700 text-sm px-4 py-2.5 rounded-xl">
+              <span aria-hidden="true">🔒</span>
+              <span>Data Anda tersimpan lokal. Tidak ada server, tidak ada pelacakan.</span>
+            </div>
+          </div>
+          <div class="space-y-3">
+            <div class="about-info-card">
+              <span class="about-info-icon" aria-hidden="true">🎯</span>
+              <div>
+                <p class="font-semibold text-sm text-gray-800">Target Pengguna</p>
+                <p class="text-xs text-gray-500 mt-0.5">Pelajar, mahasiswa, keluarga, dan masyarakat umum yang ingin belajar memilah sampah dengan benar.</p>
+              </div>
+            </div>
+            <div class="about-info-card">
+              <span class="about-info-icon" aria-hidden="true">⚙️</span>
+              <div>
+                <p class="font-semibold text-sm text-gray-800">Teknologi</p>
+                <p class="text-xs text-gray-500 mt-0.5">HTML5, Tailwind CSS, Vanilla JavaScript, localStorage. Kompatibel dengan GitHub Pages.</p>
+              </div>
+            </div>
+            <div class="about-info-card">
+              <span class="about-info-icon" aria-hidden="true">🧪</span>
+              <div>
+                <p class="font-semibold text-sm text-gray-800">Status AI</p>
+                <p class="text-xs text-gray-500 mt-0.5">Fitur AI berjalan dalam Mode Demo menggunakan aturan lokal. Belum terhubung ke model AI eksternal — tidak ada API key di frontend.</p>
+              </div>
+            </div>
+            <div class="about-info-card">
+              <span class="about-info-icon" aria-hidden="true">📋</span>
+              <div>
+                <p class="font-semibold text-sm text-gray-800">Data Panduan</p>
+                <p class="text-xs text-gray-500 mt-0.5">17 panduan sampah statis bersifat edukatif umum. Penerimaan dan metode pengolahan aktual bergantung pada fasilitas setempat.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="bg-gray-900 text-gray-400 pt-12 pb-6" role="contentinfo">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
+
+        <!-- Brand -->
+        <div class="sm:col-span-2 lg:col-span-1">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white text-base" aria-hidden="true">♻</span>
+            <span class="text-white font-bold text-lg">Pilah<span class="text-green-400">Cerdas</span></span>
+          </div>
+          <p class="text-sm leading-relaxed mb-4">Platform edukasi pemilahan sampah dan daur ulang untuk masyarakat Indonesia.</p>
+          <p class="text-xs text-gray-500">Data tersimpan lokal · Tidak ada server · Tidak ada pelacakan</p>
+        </div>
+
+        <!-- Navigasi -->
+        <nav aria-label="Navigasi footer">
+          <p class="text-white font-semibold text-sm mb-3">Navigasi</p>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#beranda"       class="hover:text-white transition-colors">🏠 Home</a></li>
+            <li><a href="#panduan"       class="hover:text-white transition-colors">📖 Panduan Sampah</a></li>
+            <li><a href="#catatan"       class="hover:text-white transition-colors">📋 Catatan Pemilahan</a></li>
+            <li><a href="#eco-challenge" class="hover:text-white transition-colors">✅ Eco Challenge</a></li>
+            <li><a href="#tentang"       class="hover:text-white transition-colors">ℹ️ Tentang</a></li>
+          </ul>
+        </nav>
+
+        <!-- AI Tools -->
+        <nav aria-label="AI Tools footer">
+          <p class="text-white font-semibold text-sm mb-3">AI Tools</p>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#scanner"   class="hover:text-white transition-colors">🔍 AI Waste Scanner</a></li>
+            <li><a href="#konsultan" class="hover:text-white transition-colors">💬 Konsultan Eco</a></li>
+            <li><a href="#upcycling" class="hover:text-white transition-colors">🎨 Generator Upcycling</a></li>
+          </ul>
+        </nav>
+
+        <!-- Pengingat -->
+        <div>
+          <p class="text-white font-semibold text-sm mb-3">⚠️ Pengingat Penting</p>
+          <p class="text-sm leading-relaxed">Kelola sampah secara bertanggung jawab. Jangan membakar atau membuang sampah sembarangan, terutama limbah B3 dan elektronik. Hubungi Dinas Lingkungan Hidup setempat untuk panduan lebih lanjut.</p>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-800 pt-6 text-center text-xs text-gray-600">
+        © 2025 PilahCerdas — Proyek Edukasi Lingkungan. Dibuat dengan ❤️ untuk bumi yang lebih bersih.
+        <span class="mx-2">·</span>
+        <span>Informasi bersifat edukatif umum, bukan panduan profesional pengelolaan limbah.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast hidden" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Konfirmasi Modal -->
+  <div id="modal-konfirmasi" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-box">
+      <h3 id="modal-title" class="text-base font-semibold text-gray-800 mb-2"></h3>
+      <p id="modal-body" class="text-sm text-gray-600 mb-5"></p>
+      <div class="flex gap-3 justify-end">
+        <button id="modal-cancel" class="btn-secondary text-sm">Batal</button>
+        <button id="modal-confirm" class="btn-danger text-sm">Ya, Hapus</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
